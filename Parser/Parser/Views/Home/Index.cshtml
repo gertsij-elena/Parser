@@ -1,5 +1,26 @@
-﻿<label></label><button id="parse">Парсить</button>
-<div class="content">
-here is the content of page
+﻿<div class="parse">
+   <label>Сссылка для парсинга:</label>
+   <input type="text" style="width:200%"value="https://www.formula1.com/en/results.html/2017/races/970/belgium/race-result.html" readonly>
+   <button id="parse">Парсить</button>
 </div>
-<button id="save">Сохранить</button>
+<div class="page_content">
+   Таблица для парсинга
+</div>
+<div class="save">
+    <input type="submit" value="Найти" id="submit" style="color:red;margin-left:50%" />
+</div>
+
+@section scripts{
+<script type="text/javascript">
+  $(function () {
+      $('#parse').click(function (e) {
+        e.preventDefault();
+        alert("parse");
+     });
+     $('#submit').click(function (e) {
+         e.preventDefault();
+         alert("submit");
+     })
+    })
+</script>    
+    }
