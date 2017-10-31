@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using CsQuery;
 using Parser.Models;
+using System.Linq;
 
 namespace Parser.Controllers
 {
@@ -15,7 +16,15 @@ namespace Parser.Controllers
         } 
         public int SaveTeam(string name)
         {
-             try
+            
+                try
+                {
+                    int teamId = (from t in _db.Teams where t.TeamName == name select t.TeamId).FirstOrDefault();
+                if (teamId>0)
+                {
+                    return teamId;
+                }
+                else
                 {
                     Team team = new Team();
                     team.TeamName = name;
@@ -23,16 +32,26 @@ namespace Parser.Controllers
                     _db.SaveChanges();
                     return team.TeamId;
                 }
+                   
+                }
                 catch
                 {
                     return 0;
                 }
-                
+                            
         }
 
         public int SavePlayer(int id,int no,string driver)
         {
-            try
+            
+                try
+                {
+                    int playerId = (from p in _db.Players where p.Driver == driver select p.PlayerId).FirstOrDefault();
+                if (playerId>0)
+                {
+                    return playerId;
+                }
+                else
                 {
                     Player player = new Player();
                     player.TeamId = id;
@@ -42,10 +61,13 @@ namespace Parser.Controllers
                     _db.SaveChanges();
                     return player.PlayerId;
                 }
-            catch
+                   
+                }
+                catch
                 {
                     return 0;
                 }
+           
 
         }
         public int SaveResult(int id,string pos,int laps,string time)
