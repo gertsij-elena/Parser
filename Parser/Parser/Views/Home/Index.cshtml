@@ -1,25 +1,54 @@
-﻿<div class="parse">
-   <label>Сссылка для парсинга:</label>
-   <input type="text" style="width:200%"value="https://www.formula1.com/en/results.html/2017/races/970/belgium/race-result.html" readonly>
-   <button id="parse">Парсить</button>
+﻿<div class="row">
+    <div class="col-md-2">Сссылка для парсинга:</div>
+    <div class="col-md-8">
+    <input type="text" name="url" style="width:300px" value="https://www.formula1.com/en/results.html/2017/races/970/belgium/race-result.html" readonly>
+    </div>
+    <div class="col-md-2"><button id="parse">Парсить</button></div>
 </div>
-<div class="page_content">
-   Таблица для парсинга
+     
+<div class="row">
+  <div class="col-md-12">Таблица для парсинга</div>
 </div>
-<div class="save">
-    <input type="submit" value="Найти" id="submit" style="color:red;margin-left:50%" />
+<table id="Html"></table>
+<div class="row">
+    <div class="col-md-8"><p id="message"></p></div>
+    <div class="col-md-4"><input type="submit" value="Сохранить" id="submit" style="color:red"/></div>
 </div>
 
 @section scripts{
+
 <script type="text/javascript">
-  $(function () {
-      $('#parse').click(function (e) {
-        e.preventDefault();
-        alert("parse");
-     });
+   
+    $(function () {
+        var url = $('input[type="text"]').val();
+        
+        $('#parse').click(function (e) {
+            alert("parseHtml");           
+             $.ajax({
+               type: "Get",
+               url: '@Url.Action("ParseTable", "Home")',
+               data: {url:url},              
+               dataType: "html",          
+               success: function (data) {
+                   alert(data);
+                   $("#Html").html(data);                   
+            }
+         });
+        });
+
      $('#submit').click(function (e) {
          e.preventDefault();
          alert("submit");
+          $.ajax({
+           type: "GET",
+           url: '@Url.Action("SaveToDb", "Home")',
+           data: {url:url},
+           datatype: "html",
+           success: function (data) {
+               alert(data); 
+               $("#message").html(data);
+            }
+         });
      })
     })
 </script>    
