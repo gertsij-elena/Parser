@@ -19,16 +19,33 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-   
+
     $(function () {
         var url = $('input[type="text"]').val();
+
+         $('p.header').append('<table class="table table-striped"></table>');
+
+         $.ajax({
+               type: "Get",
+               url: '@Url.Action("ParseTable", "Home")',
+               data: {url:url},
+               dataType: "html",
+               success: function (data) {
+
+                   console.log(data);
+
+                   $('table.table.table-striped').html(data);
+
+                   $('input[type="submit"]').prop('disabled', false);
+               }
+             });
 
         $('input[type="submit"]').prop('disabled', true);
 
         $('button.btn.btn-default').click(function (e) {
 
             e.preventDefault();
-            console.log("parseHtml"); 
+            console.log("parseHtml");
 
             $('table.table.table-striped').remove();
 
@@ -39,23 +56,23 @@
              $.ajax({
                type: "Get",
                url: '@Url.Action("ParseTable", "Home")',
-               data: {url:url},              
-               dataType: "html",          
+               data: {url:url},
+               dataType: "html",
                success: function (data) {
 
                    console.log(data);
-                   
+
                    $('table.table.table-striped').html(data);
 
                    $('input[type="submit"]').prop('disabled', false);
-            }
-         });
+               }
+             });
         });
 
         $('input[type="submit"]').click(function (e) {
          e.preventDefault();
          console.log("submit");
-        
+
          $("div.col-md-8").append('<p class=message></p>');
 
           $.ajax({
@@ -64,7 +81,7 @@
            data: {url:url},
            datatype: "html",
            success: function (data) {
-               console.log(data); 
+               console.log(data);
                $("p.message").html(data);
                $('input[type="submit"]').prop('disabled', true);
             }
