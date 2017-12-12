@@ -97,7 +97,6 @@ namespace Parser.Controllers
             try
             {
                 CQ html = CQ.CreateFromUrl(url);
-                //CQ html = CQ.CreateFromUrl("https://www.formula1.com/en/results.html/2017/races/970/belgium/race-result.html");
                 var count = html["tr"].Length;
               
                 for (int i = 1; i < count; i++)
@@ -138,8 +137,7 @@ namespace Parser.Controllers
             string data = "";
             try
             {
-                CQ html = CQ.CreateFromUrl(url);
-                //CQ html = CQ.CreateFromUrl("https://www.formula1.com/en/results.html/2017/races/970/belgium/race-result.html");
+                CQ html = CQ.CreateFromUrl(url);             
                 var table = html["table.resultsarchive-table"].Html();
                 data = table.ToString();
             }
